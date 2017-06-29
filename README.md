@@ -1,34 +1,40 @@
-# default-gulp-front-end
-Default Default Gulp for Front-end developer
+#Default Default Gulp for Front-end developer
+
+##Plugins installation instruction:
 -------
 
-Plugins installation instruction:
--------
 
-// the magic
+#### Установка NodeJS
 npm init
 
-// the magic
+
+#### Установка Gulp
 npm i gulp --save-dev
 
-// the magic
+
+#### Установка плагина SASS
 npm install gulp-sass --save-dev
 
-// the magic
+
+#### Установка оптимизации html
 npm install gulp-html
 
-// the magic
+
+#### Установка оптимизации картинок
 npm install --save-dev gulp-imagemin
 
-// the magic
+
+#### Установка js minify
 npm install --save-dev gulp-js-minify
 
-// the magic
+
+#### Установка инклудов
 npm install --save-dev gulp-rigger
 
-// the magic
+
+#### Установка плагина очистки
 npm install --save-dev gulp-clean
 
-// the magic
-npm i browser-sync --save-dev
 
+#### Установка синхронизации с браузером
+npm i browser-sync --save-dev
