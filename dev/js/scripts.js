@@ -1,3 +1,5 @@
 $(function(){
-	console.log('Hello World111!');
+
+	console.log('TEST');
+
 });
