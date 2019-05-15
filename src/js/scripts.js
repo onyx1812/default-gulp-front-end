@@ -1,4 +1,5 @@
-//= modal.js
+//= modules/jquery.min.js
+//= modules/modal.js
 
 $(function(){
 

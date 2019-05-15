@@ -75,9 +75,3 @@ gulp.task('clean', function () {
 	return gulp.src('dist/')
 		.pipe(clean());
 });
-
-// gulp.task('default', ['clean', 'watch']);
-
-//Консольные команды
-//gulp watch - следит за изменениями в файлах
-//gulp clean - очищает папку dist
