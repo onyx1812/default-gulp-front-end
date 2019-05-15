@@ -7,69 +7,77 @@ var
 	htmlmin = require('gulp-htmlmin'),
 	imagemin = require('gulp-imagemin'),
 	pngquant = require('imagemin-pngquant'),
-	minifyjs = require('gulp-js-minify'),
 	clean = require('gulp-clean'),
-	browserSync = require('browser-sync'),
+	browserSync = require('browser-sync').create(),
 	rigger = require('gulp-rigger');
 
+
+sass.compiler = require('node-sass');
+
 gulp.task('sass', function () {
-	return gulp.src('dev/scss/**/*.scss')
+	return gulp.src('src/scss/**/*.scss')
 		.pipe(sass.sync({outputStyle: 'uncompressed'})
 		.on('error', sass.logError))
-		.pipe(autoprefixer('last 2 version', 'safari 5', 'ie 7', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-		.pipe(gulp.dest('live/css'))
+		.pipe(autoprefixer({
+			browsers: ['last 2 versions'],
+			cascade: false
+		}))
+		.pipe(gulp.dest('dist/css'))
+		//.pipe(gulp.dest('../wp-content/themes/mg-theme/css'))
 		.pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('html', function() {
-	return gulp.src('dev/*.html')
+	return gulp.src('src/*.html')
 		.pipe(rigger())
 		.pipe(htmlmin({collapseWhitespace: false}))
-		.pipe(gulp.dest('live'))
+		.pipe(gulp.dest('dist'))
+		.pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('js', function(){
+	return gulp.src('src/js/**/*.js')
+		.pipe(rigger())
+		.pipe(gulp.dest('dist/js'))
+		//.pipe(gulp.dest('../wp-content/themes/mg-theme/js'))
 		.pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('images', function () {
-	return gulp.src('dev/img/**')
+	return gulp.src('src/img/**')
 		.pipe(imagemin({
 			progressive: true,
 			svgoPlugins: [{removeViewBox: false}],
 			use: [pngquant()],
 			interlaced: true
 		}))
-		.pipe(gulp.dest('live/img'))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(gulp.dest('dist/img'));
+		//.pipe(gulp.dest('../wp-content/themes/mg-theme/img'))
 });
 
-gulp.task('js', function(){
-	gulp.src('dev/js/**/*.js')
-		.pipe(gulp.dest('live/js'))
-		.pipe(browserSync.reload({stream: true}));
-});
-
-gulp.task('browser-sync', function(){
-	browserSync({
+gulp.task('browser-sync', function() {
+	browserSync.init({
 		server: {
-			baseDir: 'live'
+			baseDir: "dist"
 		},
 		notify: false
 	});
 });
 
-gulp.task('watch', ['browser-sync', 'sass', 'html', 'images', 'js'], function () {
-	gulp.watch('dev/scss/**/*.scss', ['sass']);
-	gulp.watch('dev/*.html', ['html']);
-	gulp.watch('dev/img/**', function(event) {
-		gulp.run('images');
-	});
-	gulp.watch('dev/js/**/*.js', ['js']);
+gulp.task('default', ['browser-sync', 'sass', 'html', 'images', 'js'], function () {
+	gulp.watch('src/scss/**/*.scss', ['sass']);
+	gulp.watch('src/**/*.html', ['html']);
+	gulp.watch('src/img/**', ['images']);
+	gulp.watch('src/js/**/*.js', ['js']);
 });
 
 gulp.task('clean', function () {
-	return gulp.src('live/')
+	return gulp.src('dist/')
 		.pipe(clean());
 });
 
+// gulp.task('default', ['clean', 'watch']);
+
 //Консольные команды
 //gulp watch - следит за изменениями в файлах
-//gulp clean - очищает папку live
+//gulp clean - очищает папку dist
