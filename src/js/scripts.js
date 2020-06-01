@@ -1,8 +1,5 @@
-//= modules/jquery.min.js
-//= modules/modal.js
-
-$(function(){
+(function(){
 
 	console.log('test');
 
-});
+})();

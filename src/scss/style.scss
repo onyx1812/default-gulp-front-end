@@ -1,11 +1,10 @@
 @import 'reset';
 @import 'fonts';
-@import 'bootstrap-grid';
-@import 'slick';
+@import 'bootstrap';
 
 body, html{
 	color:#000;
-	line-height: 1.3;
+	line-height: 1.2;
 	font-size: 14px;
-	background-color: #fff;
+	background: #fff;
 }
