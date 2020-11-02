@@ -7,9 +7,8 @@ var
 	htmlmin = require('gulp-htmlmin'),
 	imagemin = require('gulp-imagemin'),
 	pngquant = require('imagemin-pngquant'),
-	clean = require('gulp-clean'),
-	browserSync = require('browser-sync').create(),
-	rigger = require('gulp-rigger');
+	rigger = require('gulp-rigger'),
+	browserSync = require('browser-sync').create();
 
 
 sass.compiler = require('node-sass');
@@ -23,7 +22,6 @@ gulp.task('sass', function () {
 			cascade: false
 		}))
 		.pipe(gulp.dest('dist/css'))
-		//.pipe(gulp.dest('../wp-content/themes/mg-theme/css'))
 		.pipe(browserSync.reload({stream: true}));
 });
 
@@ -39,7 +37,6 @@ gulp.task('js', function(){
 	return gulp.src('src/js/**/*.js')
 		.pipe(rigger())
 		.pipe(gulp.dest('dist/js'))
-		//.pipe(gulp.dest('../wp-content/themes/mg-theme/js'))
 		.pipe(browserSync.reload({stream: true}));
 });
 
@@ -52,7 +49,6 @@ gulp.task('images', function () {
 			interlaced: true
 		}))
 		.pipe(gulp.dest('dist/img'));
-		//.pipe(gulp.dest('../wp-content/themes/mg-theme/img'))
 });
 
 gulp.task('browser-sync', function() {
@@ -60,7 +56,8 @@ gulp.task('browser-sync', function() {
 		server: {
 			baseDir: "dist"
 		},
-		notify: false
+		notify: false,
+		port: 5050
 	});
 });
 
@@ -69,9 +66,4 @@ gulp.task('default', ['browser-sync', 'sass', 'html', 'images', 'js'], function 
 	gulp.watch('src/**/*.html', ['html']);
 	gulp.watch('src/img/**', ['images']);
 	gulp.watch('src/js/**/*.js', ['js']);
-});
-
-gulp.task('clean', function () {
-	return gulp.src('dist/')
-		.pipe(clean());
 });
